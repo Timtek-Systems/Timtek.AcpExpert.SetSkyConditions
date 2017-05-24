@@ -1,7 +1,7 @@
 ﻿// This file is part of the Tigra.RemoteSkyConditions.Server project
 // 
 // File: SkyConditionServer.cs  Created: 2017-05-24@03:59
-// Last modified: 2017-05-24@06:17
+// Last modified: 2017-05-24@06:46
 
 using System;
 using System.IO;
@@ -9,6 +9,8 @@ using System.IO.Pipes;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using NLog;
+using NLog.Fluent;
 
 namespace Tigra.RemoteSkyConditions.Server
     {
@@ -17,6 +19,8 @@ namespace Tigra.RemoteSkyConditions.Server
     [ClassInterface(ClassInterfaceType.None)]
     public class SkyConditionServer
         {
+        private static readonly ILogger Log = LogManager.GetCurrentClassLogger();
+        private bool available;
         private NamedPipeServerStream pipe;
         private int readsPending;
         private int skyCondition = 1;
@@ -26,19 +30,36 @@ namespace Tigra.RemoteSkyConditions.Server
             CreateNamedPipeServerAsync();
             }
 
-        public bool Available { get; private set; }
+        public bool Available
+            {
+            get
+                {
+                Log.Debug().Message($"Get Available: {available}").Write();
+                return available;
+                }
+            private set
+                {
+                Log.Debug().Message($"Set Available: {value}");
+                available = value;
+                }
+            }
 
         public int SkyCondition
             {
             get
                 {
+                Log.Debug().Message("Get SkyCondition");
                 Available = false;
                 var result = skyCondition; // Prevent race condition with ReadPipeDataAsync()
+                Log.Debug().Message($"Get SkyCondition: {result}");
+#pragma warning disable 4014         // Async method not awaited.
                 ReadPipeDataAsync(); // Prime the pipe reader to read the next data
+#pragma warning restore 4014
                 return result;
                 }
             private set
                 {
+                Log.Info().Message($"Set SkyCondition: {value}").Write();
                 skyCondition = value;
                 Available = true;
                 }
@@ -62,6 +83,10 @@ namespace Tigra.RemoteSkyConditions.Server
                 try
                     {
                     var newSkyConition = await reader.ReadLineAsync().ConfigureAwait(false);
+                    Log.Info()
+                        .Message($"Received: {newSkyConition}")
+                        .Property("received", newSkyConition)
+                        .Write();
                     var ordinal = int.Parse(newSkyConition);
                     if (ordinal < 0 || ordinal > 3)
                         throw new ArgumentOutOfRangeException(
@@ -69,8 +94,20 @@ namespace Tigra.RemoteSkyConditions.Server
                     SkyCondition = ordinal;
                     Available = true;
                     }
-                catch (FormatException ex) { }
-                catch (ArgumentOutOfRangeException ex) { }
+                catch (FormatException ex)
+                    {
+                    Log.Error()
+                        .Message($"Unable to parse received value as an integer: {ex.Message}")
+                        .Property("exception", ex)
+                        .Write();
+                    }
+                catch (ArgumentOutOfRangeException ex)
+                    {
+                    Log.Error()
+                        .Message(ex.Message)
+                        .Property("exception", ex)
+                        .Write();
+                    }
                 finally
                     {
                     // Unblock future read operations
