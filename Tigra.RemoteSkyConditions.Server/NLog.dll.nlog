@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<nlog xmlns="http://www.nlog-project.org/schemas/NLog.xsd" autoReload="true">
+  <targets async="true">
+    <target xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="Trace" name="DebugView"/>
+  </targets>
+<rules>
+  <logger maxlevel="Debug" name="*" writeTo="DebugView" enabled="true" />
+</rules>
+</nlog>

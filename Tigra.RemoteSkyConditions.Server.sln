@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tigra.RemoteSkyConditions.Server", "Tigra.RemoteSkyConditions.Server\Tigra.RemoteSkyConditions.Server.csproj", "{9279B463-646F-41A7-AA86-4AED1C14AEB5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AcpWebComponents", "AcpWebComponents", "{018D45C3-22F3-4109-A387-5681ED82A44A}"
+	ProjectSection(SolutionItems) = preProject
+		AcpWebComponents\tigraSkyQuality.asp = AcpWebComponents\tigraSkyQuality.asp
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9279B463-646F-41A7-AA86-4AED1C14AEB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9279B463-646F-41A7-AA86-4AED1C14AEB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9279B463-646F-41A7-AA86-4AED1C14AEB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9279B463-646F-41A7-AA86-4AED1C14AEB5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
