@@ -1,0 +1,29 @@
+REGEDIT4
+
+[HKEY_CLASSES_ROOT\TA.SkyCondition.Server]
+@="Tigra.RemoteSkyConditions.Server.SkyConditionServer"
+
+[HKEY_CLASSES_ROOT\TA.SkyCondition.Server\CLSID]
+@="{18F11D1E-9F6E-47F7-BF36-8731DD3CB290}"
+
+[HKEY_CLASSES_ROOT\CLSID\{18F11D1E-9F6E-47F7-BF36-8731DD3CB290}]
+@="Tigra.RemoteSkyConditions.Server.SkyConditionServer"
+
+[HKEY_CLASSES_ROOT\CLSID\{18F11D1E-9F6E-47F7-BF36-8731DD3CB290}\InprocServer32]
+@="mscoree.dll"
+"ThreadingModel"="Both"
+"Class"="Tigra.RemoteSkyConditions.Server.SkyConditionServer"
+"Assembly"="Tigra.RemoteSkyConditions.Server, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+"RuntimeVersion"="v4.0.30319"
+"CodeBase"="file:///D:/VS-Projects/Tigra.RemoteSkyConditions.Server/Tigra.RemoteSkyConditions.Server/bin/Debug/Tigra.RemoteSkyConditions.Server.dll"
+
+[HKEY_CLASSES_ROOT\CLSID\{18F11D1E-9F6E-47F7-BF36-8731DD3CB290}\InprocServer32\1.0.0.0]
+"Class"="Tigra.RemoteSkyConditions.Server.SkyConditionServer"
+"Assembly"="Tigra.RemoteSkyConditions.Server, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+"RuntimeVersion"="v4.0.30319"
+"CodeBase"="file:///D:/VS-Projects/Tigra.RemoteSkyConditions.Server/Tigra.RemoteSkyConditions.Server/bin/Debug/Tigra.RemoteSkyConditions.Server.dll"
+
+[HKEY_CLASSES_ROOT\CLSID\{18F11D1E-9F6E-47F7-BF36-8731DD3CB290}\ProgId]
+@="TA.SkyCondition.Server"
+
+[HKEY_CLASSES_ROOT\CLSID\{18F11D1E-9F6E-47F7-BF36-8731DD3CB290}\Implemented Categories\{62C8FE65-4EBB-45E7-B440-6E39B2CDBF29}]

@@ -1,7 +1,7 @@
 ﻿// This file is part of the Tigra.RemoteSkyConditions.Server project
 // 
 // File: SkyConditionServer.cs  Created: 2017-05-24@03:59
-// Last modified: 2017-05-24@06:46
+// Last modified: 2017-05-24@06:59
 
 using System;
 using System.IO;
@@ -17,6 +17,7 @@ namespace Tigra.RemoteSkyConditions.Server
     [ProgId("TA.SkyCondition.Server")]
     [Guid("18f11d1e-9f6e-47f7-bf36-8731dd3cb290")]
     [ClassInterface(ClassInterfaceType.None)]
+    [ComVisible(true)]
     public class SkyConditionServer
         {
         private static readonly ILogger Log = LogManager.GetCurrentClassLogger();
