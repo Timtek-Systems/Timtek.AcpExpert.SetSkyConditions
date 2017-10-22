@@ -1,12 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+VisualStudioVersion = 15.0.27009.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tigra.RemoteSkyConditions.Server", "Tigra.RemoteSkyConditions.Server\Tigra.RemoteSkyConditions.Server.csproj", "{9279B463-646F-41A7-AA86-4AED1C14AEB5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AcpWebComponents", "AcpWebComponents", "{018D45C3-22F3-4109-A387-5681ED82A44A}"
 	ProjectSection(SolutionItems) = preProject
+		MainMenu.asp = MainMenu.asp
 		AcpWebComponents\tigraSkyQuality.asp = AcpWebComponents\tigraSkyQuality.asp
 	EndProjectSection
 EndProject
@@ -29,5 +30,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {81DC7D01-BE70-429B-B0E6-8778BD879954}
 	EndGlobalSection
 EndGlobal

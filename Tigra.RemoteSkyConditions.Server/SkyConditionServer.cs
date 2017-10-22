@@ -1,7 +1,8 @@
 ﻿// This file is part of the Tigra.RemoteSkyConditions.Server project
 // 
-// File: SkyConditionServer.cs  Created: 2017-05-24@03:59
-// Last modified: 2017-05-24@15:56
+// Copyright © 2016-2017 Tigra Astronomy., all rights reserved.
+// 
+// File: SkyConditionServer.cs  Last modified: 2017-10-22@19:19 by Tim Long
 
 using System;
 using System.Globalization;
@@ -16,7 +17,7 @@ namespace Tigra.RemoteSkyConditions.Server
     {
     [ProgId("TA.SkyCondition.Server")]
     [Guid("18f11d1e-9f6e-47f7-bf36-8731dd3cb290")]
-    [ClassInterface(ClassInterfaceType.None)]
+    //[ClassInterface(ClassInterfaceType.None)]
     [ComVisible(true)]
     public class SkyConditionServer : IDisposable
         {
@@ -24,7 +25,7 @@ namespace Tigra.RemoteSkyConditions.Server
         private bool available;
         private Thread server;
         private int skyCondition = 1;
-        private bool terminatePipeServer = false;
+        private bool terminatePipeServer;
 
         public SkyConditionServer()
             {
@@ -51,7 +52,6 @@ namespace Tigra.RemoteSkyConditions.Server
             get
                 {
                 Log.Debug().Message("Get SkyCondition");
-                Available = false;
                 var result = skyCondition; // Prevent race condition with ReadPipeDataAsync()
                 Log.Debug().Message($"Get SkyCondition: {result}");
                 return result;
@@ -60,13 +60,12 @@ namespace Tigra.RemoteSkyConditions.Server
                 {
                 Log.Info().Message($"Set SkyCondition: {value}").Write();
                 skyCondition = value;
-                Available = true;
                 }
             }
 
         private static NamedPipeServerStream CreateServerPipe()
             {
-                const string pipeName = "tigraSkyQuality";
+            const string pipeName = "tigraSkyQuality";
             var pipe = new NamedPipeServerStream(pipeName, PipeDirection.InOut, 10, PipeTransmissionMode.Byte);
             Log.Info($@"Created server pipe on \\.\pipe\{pipeName}");
             return pipe;
@@ -85,6 +84,7 @@ namespace Tigra.RemoteSkyConditions.Server
         private void PipeServerThread()
             {
             Log.Debug().Message("Pipe server thread running").Write();
+            Available = true;
             while (!terminatePipeServer)
                 {
                 using (var pipeStream = CreateServerPipe())
@@ -94,12 +94,13 @@ namespace Tigra.RemoteSkyConditions.Server
                     }
                 Log.Info("Destroyed server pipe");
                 }
-                Log.Warn("Pipe server thread exiting");
+            Available = false;
+            Log.Warn("Pipe server thread exiting");
             }
 
         private void ProcessReceivedData(string receivedData)
             {
-            int ordinal = 0;
+            var ordinal = 0;
             try
                 {
                 ordinal = int.Parse(receivedData);
@@ -128,8 +129,8 @@ namespace Tigra.RemoteSkyConditions.Server
         private void ReadPipeMessages(NamedPipeServerStream pipe)
             {
             using (var reader = new StreamReader(pipe))
+                {
                 while (pipe.IsConnected && !reader.EndOfStream)
-                    {
                     try
                         {
                         var receivedData = reader.ReadLine();
@@ -144,7 +145,7 @@ namespace Tigra.RemoteSkyConditions.Server
                             .Message($"Error reading pipe stream: {ex.Message}")
                             .Write();
                         }
-                    }
+                }
             Log.Warn().Message("Client disconnected").Write();
             }
 
@@ -159,9 +160,9 @@ namespace Tigra.RemoteSkyConditions.Server
             {
             AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
                 {
-                    var exception = args.ExceptionObject as Exception;
-                    var exceptionMessage = exception?.Message ?? "Unknown exception";
-                    Log.Error()
+                var exception = args.ExceptionObject as Exception;
+                var exceptionMessage = exception?.Message ?? "Unknown exception";
+                Log.Error()
                     .Message($"Unhandled exception: {exceptionMessage}")
                     .Property("exception", exception)
                     .Write();
@@ -169,16 +170,14 @@ namespace Tigra.RemoteSkyConditions.Server
             }
 
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+        private bool disposedValue; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
             {
             if (!disposedValue)
                 {
                 if (disposing)
-                    {
                     terminatePipeServer = true;
-                    }
 
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
                 // TODO: set large fields to null.
