@@ -7,7 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tigra.RemoteSkyConditions.S
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AcpWebComponents", "AcpWebComponents", "{018D45C3-22F3-4109-A387-5681ED82A44A}"
 	ProjectSection(SolutionItems) = preProject
-		MainMenu.asp = MainMenu.asp
+		AcpWebComponents\Set Sky Conditions tiddler.asp = AcpWebComponents\Set Sky Conditions tiddler.asp
+		AcpWebComponents\tigraSetSkyConditions.asp = AcpWebComponents\tigraSetSkyConditions.asp
 		AcpWebComponents\tigraSkyQuality.asp = AcpWebComponents\tigraSkyQuality.asp
 	EndProjectSection
 EndProject

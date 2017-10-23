@@ -27,7 +27,6 @@ function writeSkyQuality(level)
 // Main script
 //
 
-var sessionMessageKey = "tigra_SetSkyQualityMessage";
 Response.ContentType = "text/plain";
 if (Request.ServerVariables("REQUEST_METHOD").toLowerCase() != "post") 
     {
@@ -41,22 +40,22 @@ if (Request.ServerVariables("REQUEST_METHOD").toLowerCase() != "post")
     Response.Write("<option value='3'>Excellent</option>");
     Response.Write("</select></form></html>");
     Response.Write("<<PostForm '' '/ac/tigraSetSkyConditions.asp' 'Submit' 'Sets the Sky Quality in ACP Scheduler'>>\n");
-    Response.Write(Session(sessionMessageKey));
     }
 else
     { 
-    // Handle the POST request.
+    // Handle the POST request. Try to set the new sky quality and
+    // send the result message back to the response stream. This then appears
+    // at the bottom of the tiddler without having to mess about with
+    // session state.
     var postedSkyQuality = Request.Form("skyQuality");
     if (postedSkyQuality < "0" || postedSkyQuality > "3")
         {
-        Session(sessionMessageKey) = "Attempt to set Sky Conditions to an invalid value"
+        Response.Write("Attempt to set Sky Conditions to an invalid value");
         }
     else
         {
         var result = writeSkyQuality(postedSkyQuality);
-        Session(sessionMessageKey) = result;
-        // ToDo: pass the result back to the tiddler.
-        // Probably: set a session variable with the result message and redirect to self/GET
+        Response.Write(result);
         }
     }
 </script>
