@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+		<DirectoryRef Id="dirAcpWebAspComponents"/>
+    <ComponentGroup Id="cgAcpWebComponents" Directory="dirAcpWebAspComponents">
+      <Component Id="cmpSetSkyConditionsAspComponent" Guid="*">
+        <File Id="filSetSkyConditionsAspComponent"
+               Source="$(var.SolutionDir)AcpWebComponents\tigraSetSkyConditions.asp"
+               KeyPath="yes"
+               Vital="yes" />
+      </Component>
+    </ComponentGroup>
+	</Fragment>
+</Wix>

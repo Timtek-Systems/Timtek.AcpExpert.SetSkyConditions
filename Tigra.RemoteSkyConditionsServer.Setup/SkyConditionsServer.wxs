@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <DirectoryRef Id="INSTALLFOLDER"/>
+    <ComponentGroup Id="cgSkyConditionsServer" Directory="INSTALLFOLDER">
+      <Component Id="cmpSkyConditionsServer" Guid="*">
+        <File Id="filSkyConditionsServer"
+              Source="$(var.SolutionDir)AcpWebComponents\tigraSetSkyConditions.asp"
+              KeyPath="yes"
+              Vital="yes" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

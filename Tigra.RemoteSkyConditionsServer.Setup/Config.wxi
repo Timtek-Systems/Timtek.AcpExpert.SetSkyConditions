@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Include>
+  <!-- User Configuration - you must ensure all these variables have correct values for your project -->
+  <?define InstallName = "ACP Scheduler Remote Sky Conditions" ?>
+  <?define Manufacturer = "Tigra Astronomy" ?>
+  <?define InstallDirectory = "$(var.InstallName)" ?>
+  <?define CopyrightNotice="Copyright © 2017 Tigra Astronomy, all rights reserved" ?>
+  <!-- UpgradeCode should be unique to each product and once set should never change -->
+  <?define UpgradeCode = "{f9c847f8-5866-42f1-adbd-96b1c00cba92}"?>
+  <!-- End of User Configuration - do not edit anything beyond this point -->
+
+  <!-- Define platform-specific names and locations -->
+  <?if $(var.Platform) = x64 ?>
+  <?define ProductName = "$(var.InstallName) (x64)" ?>
+  <?define Win64 = "yes" ?>
+  <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
+  <?define PlatformCommonFilesFolder = "CommonFiles64Folder" ?>
+  <?define X86ProgramFilesFolder = "ProgramFilesFolder" ?>
+  <?else ?>
+  <?define ProductName = "$(var.InstallName) (x86)" ?>
+  <?define Win64 = "no" ?>
+  <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
+  <?define PlatformCommonFilesFolder = "CommonFilesFolder" ?>
+  <?define X86ProgramFilesFolder = "ProgramFilesFolder" ?>
+  <?endif ?>
+
+  <!-- Set installer version based on the file version of the main assembly. -->
+  <?define ProductVersion="!(bind.FileVersion.filLocalServerAssembly)"?>
+</Include>
